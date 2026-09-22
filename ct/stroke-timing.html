@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CT Timeline of Ischemic Stroke - Reference</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #101116; font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 16px; }
+.page { background: #1a1b21; color: #e9e7e0; max-width: 760px; margin: 0 auto; padding: 28px 24px 48px; border-radius: 14px; border: 1px solid #2b2c34; }
+.top-bar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 12px; }
+.title-block .page-title { font-size: 22px; font-weight: 700; color: #e9e7e0; margin-bottom: 3px; line-height: 1.2; }
+.title-block .page-subtitle { font-size: 13px; color: #8c8b93; }
+.creator { text-align: right; flex-shrink: 0; }
+.creator-name { font-size: 12px; font-weight: 700; color: #e9e7e0; }
+.creator-sub { font-size: 10px; color: #8c8b93; line-height: 1.6; }
+.divider { border: none; border-top: 1px solid #2b2c34; margin: 14px 0 20px; }
+.intro { font-size: 13px; color: #b3b1ab; line-height: 1.7; margin-bottom: 20px; }
+.stage-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.nav-btn { padding: 8px 14px; border-radius: 20px; border: 1.5px solid #33343d; background: #24252c; color: #b3b1ab; cursor: pointer; font-size: 12px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; transition: all .15s; }
+.nav-btn.active { background: #e8a94a; color: #1a1408; border-color: #e8a94a; }
+.stage-grid { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: start; }
+.scan-img-wrap { text-align: center; }
+.scan-img { width: 100%; max-width: 280px; height: auto; display: block; margin: 0 auto; border-radius: 10px; }
+.severity-pill { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
+.scan-caption { font-size: 10px; color: #8c8b93; text-align: center; margin-top: 6px; line-height: 1.5; }
+.stage-title { font-size: 17px; font-weight: 700; color: #e9e7e0; margin-bottom: 3px; }
+.stage-mol { font-size: 11px; font-style: italic; color: #8c8b93; margin-bottom: 12px; }
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+.checklist li { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; line-height: 1.6; background: #212228; border: 1px solid #33343d; border-radius: 7px; padding: 9px 12px; }
+.checklist li .dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.checklist li .label { font-weight: 700; margin-right: 4px; color: #e9e7e0; }
+.checklist li .note { color: #b3b1ab; }
+.pitfall-box { background: #2a1f18; border: 1px solid #7a4a2a; border-radius: 8px; padding: 11px 14px; }
+.pitfall-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #e8a94a; margin-bottom: 5px; }
+.pitfall-box p { font-size: 12px; color: #d8c3a8; line-height: 1.6; }
+.section-divider { border: none; border-top: 1px solid #2b2c34; margin: 24px 0 18px; }
+.summary-title { font-size: 15px; font-weight: 700; color: #e9e7e0; margin-bottom: 10px; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.summary-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 560px; }
+.summary-table th { background: #0d0e11; color: #ffffff; padding: 8px 8px; text-align: center; font-weight: 500; }
+.summary-table td { padding: 7px 8px; text-align: center; border: 0.5px solid #2b2c34; color: #d8d6cf; }
+.summary-table tr:nth-child(1) td { background: #1f2025; }
+.summary-table tr:nth-child(2) td { background: #2a2419; }
+.summary-table tr:nth-child(3) td { background: #2a2016; }
+.summary-table tr:nth-child(4) td { background: #241f2a; }
+.summary-table tr:nth-child(5) td { background: #1a1b21; }
+.summary-table td:first-child { text-align: left; font-weight: 500; }
+.memory { background: #2e2618; border: 1px solid #8a6a2a; border-radius: 8px; padding: 14px 16px; margin-top: 18px; }
+.memory-title { font-size: 13px; font-weight: 700; color: #e8c78a; margin-bottom: 8px; }
+.memory-row { font-size: 12px; color: #ecd7ac; margin-bottom: 6px; line-height: 1.5; }
+.memory-row strong { color: #e8c78a; display: block; }
+.refs-box { margin-top: 20px; padding-top: 14px; border-top: 0.5px solid #2b2c34; }
+.refs-title { font-size: 11px; font-weight: 700; color: #8c8b93; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.refs-list { list-style: none; padding: 0; }
+.refs-list li { font-size: 10px; color: #8c8b93; line-height: 1.7; padding-left: 14px; position: relative; margin-bottom: 3px; }
+.refs-list li::before { content: counter(ref-counter) "."; counter-increment: ref-counter; position: absolute; left: 0; font-weight: 600; }
+.refs-list { counter-reset: ref-counter; }
+.refs-list a { color: #e8c78a; text-decoration: none; }
+.footer-note { font-size: 10px; color: #8c8b93; font-style: italic; margin-top: 14px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="index.html" style="display:inline-block;font-family:-apple-system,sans-serif;font-size:11px;color:#8c8b93;text-decoration:none;margin-bottom:14px;">&larr; CT</a>
+  <div class="top-bar">
+    <div class="title-block">
+      <div class="page-title">CT Timeline of Ischemic Stroke</div>
+      <div class="page-subtitle">Non-Contrast Findings, Normal to Subacute</div>
+    </div>
+    <div class="creator">
+      <div class="creator-name">Kayra Cengiz</div>
+      <div class="creator-sub">B.Arch &nbsp;|&nbsp; MD Candidate<br>BU School of Medicine</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <p class="intro">Five checkpoints on the same non-contrast CT: what a normal scan looks like, and how a left MCA territory infarct evolves through it over time. There is also a well documented window later in this timeline where the infarct can transiently blend back toward normal density, hiding a real deficit.</p>
+
+  <div class="stage-nav" id="stage-nav"></div>
+  <div id="stage-display"></div>
+
+  <hr class="section-divider">
+  <div class="summary-title">Quick reference summary</div>
+  <div class="table-wrap">
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th style="text-align:left">Stage</th>
+          <th>Grey-White Diff.</th><th>Vessel Sign</th><th>Mass Effect</th><th>Density</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Normal</td>
+          <td>Preserved</td>
+          <td>None</td>
+          <td>None</td>
+          <td>Symmetric</td>
+        </tr>
+        <tr>
+          <td>Early (0 to 6h)</td>
+          <td>Subtle loss</td>
+          <td style="color:#e8a94a;font-weight:700">&plusmn; Hyperdense vessel</td>
+          <td>None to minimal</td>
+          <td>Often normal</td>
+        </tr>
+        <tr>
+          <td>Established (6 to 24h)</td>
+          <td style="color:#ff6e57;font-weight:700">Clearly lost</td>
+          <td>Resolving</td>
+          <td>Mild, sulcal effacement</td>
+          <td>Hypodense, territory-based</td>
+        </tr>
+        <tr>
+          <td>Late (1 to 3 days)</td>
+          <td>Well defined</td>
+          <td>Resolved</td>
+          <td>Building toward peak</td>
+          <td>Well-defined hypodensity</td>
+        </tr>
+        <tr>
+          <td>Subacute (3 days to 3wk)</td>
+          <td>Well defined</td>
+          <td>Resolved</td>
+          <td>Peaks days 3 to 5, then declines</td>
+          <td style="color:#e8a94a;font-weight:700">&uarr; Fogging ~2 to 3wk</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="memory">
+    <div class="memory-title">Memory aid</div>
+    <div class="memory-row"><strong>Normal = your comparison point</strong>Every later stage is judged against this baseline; always compare with the contralateral side</div>
+    <div class="memory-row"><strong>Early = often looks normal</strong>Cytotoxic edema starts immediately but takes hours to become visible; subtle insular ribbon loss and lentiform nucleus blurring are the earliest clues, and CT here mainly rules out hemorrhage before thrombolysis</div>
+    <div class="memory-row"><strong>Established = the early clues become definite</strong>The insular ribbon and lentiform nucleus, only subtly blurred earlier, are now clearly obscured; hypodensity is well defined and follows the vascular territory</div>
+    <div class="memory-row"><strong>Late = mass effect building toward its peak</strong>Sulcal effacement and ventricular compression increase as edema builds toward days 3 to 5; hemorrhagic transformation risk is also highest around day 4, especially after reperfusion</div>
+    <div class="memory-row"><strong>Subacute = the fogging trap</strong>Around 2 to 3 weeks the infarct can transiently return to near-normal density as macrophages move in; do not let this reassure you. True encephalomalacia and ex-vacuo dilation are later, chronic findings, typically not seen until well beyond 3 weeks</div>
+  </div>
+
+  <div class="refs-box">
+    <div class="refs-title">References</div>
+    <ol class="refs-list">
+      <li>Stroke Imaging. <em>Medscape eMedicine.</em> <a href="https://emedicine.medscape.com/article/338385-overview">emedicine.medscape.com/article/338385</a></li>
+      <li>Becker H, Desch H, Hacker H, Pencz A. CT fogging effect with ischemic cerebral infarcts. <em>Neuroradiology.</em> 1979;18:185-192.</li>
+      <li>Skriver EB, Olsen TS. Transient disappearance of cerebral infarcts on CT scan, the so-called fogging effect. <em>Neuroradiology.</em> 1981;22:61-65.</li>
+      <li>Yannes M, Frabizzio JV, Shah QA. Reversal of CT hypodensity after acute ischemic stroke. <em>J Vasc Interv Neurol.</em> 2013;6:10-14. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3693996/">PMC3693996</a></li>
+    </ol>
+  </div>
+
+  <div class="footer-note">Note: Beyond this timeline, over 3 weeks out, the infarct progresses to encephalomalacia, a well-defined CSF-density area of tissue loss with ex-vacuo dilation of the adjacent ventricle. The fogging effect can also occur on MRI (T2/FLAIR), typically slightly later, median around 10 days post-stroke. Always correlate with clinical history and prior imaging when a follow-up scan looks unexpectedly normal.</div>
+</div>
+
+<script>
+var STAGES = [
+  {
+    title: '1. Normal',
+    mol: 'No infarct present, this is your comparison baseline',
+    img: 'assets/ct-normal.png',
+    severity: '#3a6b3a',
+    tip: '<strong>This is what a normal non-contrast CT looks like.</strong> Grey-white differentiation is preserved throughout, sulci and ventricles are symmetric, and there is no focal hypodensity. Every finding in the following stages is a deviation from this baseline, which is why comparing with the contralateral side matters so much once a lesion is present.',
+    checks: [
+      { label: 'Grey-white differentiation:', text: 'normal and well preserved throughout both hemispheres.', dot: '#8c8b93' },
+      { label: 'Vessel sign:', text: 'none. Vessels should be isodense to similar-caliber vessels elsewhere.', dot: '#8c8b93' },
+      { label: 'Mass effect:', text: 'none. Sulci and ventricles are symmetric.', dot: '#8c8b93' },
+      { label: 'Density:', text: 'symmetric throughout, no focal hypodense or hyperdense region.', dot: '#8c8b93' }
+    ],
+    pitfall: null
+  },
+  {
+    title: '2. Early (0 to 6h)',
+    mol: 'CT is mainly here to exclude hemorrhage before thrombolysis',
+    img: 'assets/ct-early.png',
+    severity: '#8a7a2a',
+    tip: '<strong>The scan may look almost entirely normal.</strong> This is expected. Cytotoxic edema begins at the moment of occlusion, but it takes hours to accumulate enough water content to show up as visible hypodensity. The job of CT at this stage is ruling out hemorrhage, not confirming the infarct.',
+    checks: [
+      { label: 'Grey-white differentiation:', text: 'may show subtle blurring, especially at the insular ribbon and lentiform nucleus, but is easily missed without a high index of suspicion and narrow window settings.', dot: '#8c8b93' },
+      { label: 'Vessel sign:', text: 'a hyperdense MCA (or other vessel) sign may already be visible, representing the clot itself rather than tissue change. Compare with the contralateral side; calcified atherosclerosis can mimic it.', dot: '#e8a94a' },
+      { label: 'Mass effect:', text: 'typically absent or minimal. Significant swelling this early should raise suspicion for a large territory infarct or an alternative diagnosis.', dot: '#8c8b93' },
+      { label: 'Density:', text: 'frequently unremarkable to the naked eye. Imaging within 4 to 6 hours of onset still shows early infarct changes in a majority of cases when specifically looked for, but a normal scan does not exclude a hyperacute stroke.', dot: '#8c8b93' }
+    ],
+    pitfall: 'A normal-looking scan in the first 6 hours does not rule out stroke. Use narrow window settings and check the insular ribbon and lentiform nucleus specifically before calling an early CT normal.'
+  },
+  {
+    title: '3. Established (6 to 24h)',
+    mol: 'Territory-based hypodensity becomes clearly visible',
+    img: 'assets/ct-established.png',
+    severity: '#a8622a',
+    tip: '<strong>A well-defined territory now stands out.</strong> The infarct appears as cortical hypodensity following a vascular territory, with clear loss of grey-white differentiation and gyral swelling. Mild mass effect and sulcal effacement appear as edema builds.',
+    checks: [
+      { label: 'Grey-white differentiation:', text: 'clearly lost over the affected territory. The insular ribbon and lentiform nucleus, only subtly blurred earlier, are now fully obscured.', dot: '#ff6e57' },
+      { label: 'Vessel sign:', text: 'if present earlier, may persist here but is less consistently seen as clot composition changes.', dot: '#8c8b93' },
+      { label: 'Mass effect:', text: 'sulcal effacement begins to appear as cytotoxic edema accumulates, and will continue to build over the next several days.', dot: '#e8a94a' },
+      { label: 'Density:', text: 'well-defined hypodensity now conforms to a recognizable vascular territory, making the diagnosis far more confident than in the earlier window.', dot: '#e8a94a' }
+    ],
+    pitfall: 'Do not mistake territory-based hypodensity for a mass or other pathology; the vascular distribution and clinical timeline are the giveaways.'
+  },
+  {
+    title: '4. Late (1 to 3 days)',
+    mol: 'Mass effect builds toward its peak',
+    img: 'assets/ct-late.png',
+    severity: '#a03a3a',
+    tip: '<strong>Edema keeps building.</strong> The hypodensity is now well established, and sulcal effacement with ventricular compression becomes more apparent as mass effect climbs toward its peak around days 3 to 5. This window also carries the highest risk of hemorrhagic transformation, peaking around day 4, especially after reperfusion therapy.',
+    checks: [
+      { label: 'Grey-white differentiation:', text: 'fully and clearly lost over the territory; this distinction is well established by this point.', dot: '#8c8b93' },
+      { label: 'Vessel sign:', text: 'typically resolved; the clot itself is no longer the dominant finding.', dot: '#8c8b93' },
+      { label: 'Mass effect:', text: 'increasing sulcal effacement and compression of the adjacent ventricle as edema builds toward its peak.', dot: '#e8a94a' },
+      { label: 'Density:', text: 'well-defined hypodensity, increasingly conspicuous as swelling peaks.', dot: '#e8a94a' }
+    ],
+    pitfall: 'Peak mass effect in this window is expected natural history, not necessarily a sign of a new or expanding process. But this is also the highest-risk window for hemorrhagic transformation, so a sudden clinical change here warrants a repeat scan.'
+  },
+  {
+    title: '5. Subacute (3 days to 3wk)',
+    mol: 'Mass effect declines, then fogging can mask the infarct',
+    img: 'assets/ct-subacute.png',
+    severity: '#6a2424',
+    tip: '<strong>Mass effect peaks around days 3 to 5</strong>, then gradually declines through the rest of this window. Later on, roughly 2 to 3 weeks post-ictus, the infarct can transiently return to near-isodensity: the fogging effect. This is caused by lipid-laden macrophage infiltration, decreased water content, capillary proliferation, and petechial hemorrhage, and it can mask the true extent of the infarct on a follow-up scan.',
+    checks: [
+      { label: 'Grey-white differentiation:', text: 'well defined earlier in this window, though it becomes harder to appreciate once fogging sets in.', dot: '#8c8b93' },
+      { label: 'Vessel sign:', text: 'long resolved by this stage.', dot: '#8c8b93' },
+      { label: 'Mass effect:', text: 'peaks around days 3 to 5, then gradually declines for the remainder of this window.', dot: '#e8a94a' },
+      { label: 'Density:', text: 'around 2 to 3 weeks, roughly half of infarcts transiently approach isodensity, the classic fogging effect, which can lead to underestimating true infarct size.', dot: '#e8a94a' }
+    ],
+    pitfall: 'The fogging effect is the trap of this stage. A follow-up scan around 2 to 3 weeks can look reassuringly normal even though the infarct is still there. Encephalomalacia and ex-vacuo ventricular dilation are not expected yet in this window; those are later, chronic findings typically seen well beyond 3 weeks. Correlate with prior imaging or clinical history rather than trusting the scan in isolation.'
+  }
+];
+
+var current = 0;
+
+function renderStage(idx) {
+  current = idx;
+  var s = STAGES[idx];
+  var checksHtml = s.checks.map(function(c) {
+    return '<li><div class="dot" style="background:'+c.dot+'"></div><div><span class="label">'+c.label+'</span><span class="note">'+c.text+'</span></div></li>';
+  }).join('');
+  var pillText = s.title.replace(/^[0-9]+\.\s+/, '');
+  var pitfallHtml = s.pitfall
+    ? '<div class="pitfall-box"><div class="pitfall-title">Pitfall</div><p>'+s.pitfall+'</p></div>'
+    : '';
+  var html = '<div class="stage-grid">'
+    + '<div class="scan-img-wrap">'
+      + '<div><span class="severity-pill" style="background:'+s.severity+';color:#f2f0ea;">'+pillText+'</span></div>'
+      + '<img class="scan-img" src="'+s.img+'" alt="'+pillText+' non-contrast CT">'
+      + '<div class="scan-caption">Axial non-contrast CT, basal ganglia level.</div>'
+    + '</div>'
+    + '<div>'
+      + '<div class="stage-title">'+s.title+'</div>'
+      + '<div class="stage-mol">'+s.mol+'</div>'
+      + '<ul class="checklist">'+checksHtml+'</ul>'
+    + '</div>'
+    + '</div>'
+    + pitfallHtml;
+  document.getElementById('stage-display').innerHTML = html;
+  document.querySelectorAll('.nav-btn').forEach(function(b, i) {
+    b.classList.toggle('active', i === idx);
+  });
+}
+
+var nav = document.getElementById('stage-nav');
+STAGES.forEach(function(s, i) {
+  var btn = document.createElement('button');
+  btn.className = 'nav-btn' + (i === 0 ? ' active' : '');
+  btn.textContent = s.title.replace(/^[0-9]+\.\s+/, '').replace(/\s*\(.*\)$/, '');
+  btn.onclick = function() { renderStage(i); };
+  nav.appendChild(btn);
+});
+
+renderStage(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading a Chest X-Ray: ABCDE Approach - Reference</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #101116; color: #e9e7e0; font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.page { background: #1a1b21; max-width: 960px; margin: 0 auto; padding: 28px 24px 48px; border-radius: 14px; border: 1px solid #2b2c34; }
+a { color: inherit; text-decoration: none; }
+.back-link { display: inline-block; font-size: 11px; color: #8c8b93; margin-bottom: 14px; }
+.back-link:hover { color: #e9e7e0; }
+.top-bar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 12px; }
+.title-block .page-title { font-size: 22px; font-weight: 700; color: #e9e7e0; margin-bottom: 3px; line-height: 1.2; }
+.title-block .page-subtitle { font-size: 13px; color: #8c8b93; }
+.creator { text-align: right; flex-shrink: 0; }
+.creator-name { font-size: 12px; font-weight: 700; color: #e9e7e0; }
+.creator-sub { font-size: 10px; color: #8c8b93; line-height: 1.6; }
+.divider { border: none; border-top: 1px solid #2b2c34; margin: 14px 0 20px; }
+.intro { font-size: 13px; color: #b3b1ab; line-height: 1.7; margin-bottom: 20px; }
+
+.step-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.step-btn { display: flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 20px; border: 1.5px solid #33343d; background: #24252c; color: #b3b1ab; cursor: pointer; font-size: 12px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; transition: all .15s; }
+.step-btn .letter { font-size: 13px; font-weight: 700; width: 14px; text-align: center; }
+.step-btn:hover { border-color: #5db8c9; color: #e9e7e0; }
+.step-btn.active { background: #5db8c9; color: #0c1a1e; border-color: #5db8c9; }
+
+.content-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; align-items: start; }
+@media (max-width: 700px) { .content-grid { grid-template-columns: 1fr; } .title-block .page-title { font-size: 19px; } .page { padding: 22px 16px 36px; } }
+
+.xray-viewer { position: sticky; top: 16px; }
+@media (max-width: 700px) { .xray-viewer { position: static; } }
+.xray-label { font-size: 10px; letter-spacing: .08em; color: #8c8b93; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+.xray-frame { background: #000; border: 1px solid #33343d; border-radius: 10px; overflow: hidden; }
+.xray-frame img { width: 100%; height: auto; display: block; transition: opacity .25s ease; }
+.xray-frame img.fade { opacity: 0; }
+.xray-credit { font-size: 9px; color: #8c8b93; padding: 5px 10px; text-align: center; border-top: 1px solid #2b2c34; background: #101116; line-height: 1.5; }
+.xray-credit a { color: #5db8c9; }
+
+.progress-dots { display: flex; gap: 6px; margin-top: 10px; justify-content: center; }
+.progress-dot { width: 7px; height: 7px; border-radius: 50%; background: #33343d; transition: background .2s; cursor: pointer; }
+.progress-dot.active { background: #5db8c9; }
+
+.info-panel { display: flex; flex-direction: column; gap: 14px; }
+.step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.step-letter-big { font-size: 40px; font-weight: 700; line-height: 1; letter-spacing: -.02em; flex-shrink: 0; }
+.step-title { font-size: 17px; font-weight: 700; color: #e9e7e0; }
+.step-desc { font-size: 12.5px; color: #b3b1ab; line-height: 1.7; }
+
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.checklist li { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; line-height: 1.6; background: #212228; border: 1px solid #33343d; border-radius: 7px; padding: 9px 12px; }
+.checklist li .dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+.checklist li .label { font-weight: 700; color: #e9e7e0; }
+.checklist li .note { color: #b3b1ab; font-size: 12px; display: block; margin-top: 2px; }
+
+.pitfall-box { background: #2a1c1c; border: 1px solid #5a3030; border-radius: 8px; padding: 12px 14px; }
+.pitfall-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #e07a7a; margin-bottom: 5px; }
+.pitfall-box p { font-size: 12px; color: #d3a3a3; line-height: 1.6; }
+
+.nav-arrows { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
+.nav-arrow-btn { padding: 8px 18px; background: #24252c; border: 1.5px solid #33343d; border-radius: 20px; color: #b3b1ab; cursor: pointer; font-size: 12px; font-family: inherit; font-weight: 600; -webkit-tap-highlight-color: transparent; transition: all .15s; }
+.nav-arrow-btn:hover:not(:disabled) { border-color: #5db8c9; color: #e9e7e0; }
+.nav-arrow-btn:disabled { opacity: .3; cursor: default; }
+.step-counter { font-size: 11px; color: #8c8b93; font-weight: 600; }
+
+.summary-section { margin-top: 30px; padding-top: 22px; border-top: 1px solid #2b2c34; }
+.summary-title { font-size: 11px; font-weight: 700; color: #8c8b93; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 12px; }
+.abcde-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+@media (max-width: 600px) { .abcde-grid { grid-template-columns: repeat(2, 1fr); } }
+.abcde-card { background: #212228; border: 1px solid #33343d; border-radius: 9px; padding: 12px; cursor: pointer; transition: border-color .15s; }
+.abcde-card:hover { border-color: #5db8c9; }
+.abcde-card .big-letter { font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+.abcde-card .card-title { font-size: 11px; font-weight: 700; color: #e9e7e0; margin-bottom: 5px; }
+.abcde-card .card-items { font-size: 10px; color: #b3b1ab; line-height: 1.7; }
+
+.refs-section { margin-top: 26px; padding-top: 18px; border-top: 1px solid #2b2c34; }
+.refs-eyebrow { font-size: 11px; font-weight: 700; color: #8c8b93; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
+.refs-list { list-style: none; counter-reset: ref; }
+.refs-list li { counter-increment: ref; font-size: 10px; color: #8c8b93; line-height: 1.7; padding-left: 18px; position: relative; margin-bottom: 3px; }
+.refs-list li::before { content: counter(ref) "."; position: absolute; left: 0; font-weight: 700; color: #b3b1ab; }
+.refs-list a { color: #5db8c9; }
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="index.html">&larr; X-Ray</a>
+  <div class="top-bar">
+    <div class="title-block">
+      <div class="page-title">Reading a Chest X-Ray</div>
+      <div class="page-subtitle">A Systematic ABCDE Approach</div>
+    </div>
+    <div class="creator">
+      <div class="creator-name">Kayra Cengiz</div>
+      <div class="creator-sub">B.Arch &nbsp;|&nbsp; MD Candidate<br>BU School of Medicine</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <p class="intro">Five passes over the same normal PA film. Each step annotates what you are actually looking for, what a normal finding looks like, and the pitfall that most often trips people up at that stage. Tap a step or use the arrows to move through.</p>
+
+  <div class="step-nav" id="step-nav"></div>
+
+  <div class="content-grid">
+    <div class="xray-viewer">
+      <div class="xray-label" id="xray-label">Step A &mdash; Airway</div>
+      <div class="xray-frame">
+        <img id="xray-img" src="" alt="Annotated chest X-ray"/>
+        <div class="xray-credit">
+          Case courtesy of <a href="https://radiopaedia.org/?lang=us" target="_blank">Usman Bashir</a>,
+          <a href="https://radiopaedia.org/?lang=us" target="_blank">Radiopaedia.org</a>.
+          <a href="https://radiopaedia.org/cases/18394?lang=us" target="_blank">rID: 18394</a>. CC BY-NC-SA 3.0.
+        </div>
+      </div>
+      <div class="progress-dots" id="progress-dots"></div>
+    </div>
+
+    <div class="info-panel" id="info-panel"></div>
+  </div>
+
+  <div class="nav-arrows">
+    <button class="nav-arrow-btn" id="btn-prev" onclick="navigate(-1)">&#8592; Previous</button>
+    <span class="step-counter" id="step-counter">1 / 5</span>
+    <button class="nav-arrow-btn" id="btn-next" onclick="navigate(1)">Next &#8594;</button>
+  </div>
+
+  <div class="summary-section">
+    <div class="summary-title">ABCDE at a glance</div>
+    <div class="abcde-grid" id="abcde-grid"></div>
+  </div>
+
+  <div class="refs-section">
+    <div class="refs-eyebrow">References</div>
+    <ol class="refs-list">
+      <li>Bashir U. Normal chest radiograph &mdash; female. Radiopaedia.org. <a href="https://doi.org/10.53347/rID-18394" target="_blank">doi:10.53347/rID-18394</a>. CC BY-NC-SA 3.0.</li>
+      <li>Corne J, Carroll M, Brown I, Delany D. <em>Chest X-Ray Made Easy.</em> 4th ed. Elsevier; 2016.</li>
+      <li>Novelline RA. <em>Squire's Fundamentals of Radiology.</em> 6th ed. Harvard University Press; 2004.</li>
+      <li>Gaillard F, et al. Approach to the chest radiograph. Radiopaedia.org. Accessed July 2026. <a href="https://radiopaedia.org/articles/chest-radiograph-an-approach" target="_blank">radiopaedia.org</a></li>
+      <li>Collins J, Stern EJ. <em>Chest Radiology: The Essentials.</em> 3rd ed. Lippincott Williams and Wilkins; 2015.</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+var IMGS = {'A':'assets/cxr-A.png','B':'assets/cxr-B.png','C':'assets/cxr-C.png','D':'assets/cxr-D.png','E':'assets/cxr-E.png'};
+
+var STEPS = [
+  {
+    key:'A', title:'Airway', color:'#7ec8a0',
+    desc:'Begin at the trachea and trace it down to the carina. It should be midline or very slightly right-deviated at the aortic arch. Assess the carina angle and both mainstem bronchi.',
+    checks:[
+      {label:'Trachea position', text:'Midline. Deviation suggests tension pneumothorax or large effusion pushing away, or collapse and fibrosis pulling toward the same side.'},
+      {label:'Carina angle', text:'Normally under 70 degrees. Widening above 70 degrees suggests left atrial enlargement or a subcarinal mass.'},
+      {label:'Mainstem bronchi', text:'Both should be visible. The right mainstem is shorter and more vertical, explaining why aspirated foreign bodies favour the right.'},
+      {label:'Lines and tubes', text:'ETT tip should sit 3 to 5 cm above the carina. NGT should cross the diaphragm midline and tip below the left hemidiaphragm.'},
+    ],
+    pitfall:'Tracheal deviation can be positional on a rotated film. Always check rotation first: the medial clavicle ends should be equidistant from the spinous processes.'
+  },
+  {
+    key:'B', title:'Breathing', color:'#6ab0d4',
+    desc:'Systematically compare upper, middle, and lower zones bilaterally. Look for asymmetry in density and lung markings. Trace the lung edge carefully to detect pneumothorax.',
+    checks:[
+      {label:'Lung zones', text:'Compare upper, middle and lower zones bilaterally. Asymmetric opacification suggests consolidation, atelectasis, effusion, or mass.'},
+      {label:'Lung markings', text:'Bronchovascular markings should reach the periphery. An absent lung edge with no markings beyond it indicates pneumothorax.'},
+      {label:'Horizontal fissure', text:'Visible in the right lung at the level of the anterior 4th rib. Displacement suggests lobar collapse or a large effusion.'},
+      {label:'Hila', text:'Left hilum is normally slightly higher than right. Bilateral enlargement suggests sarcoidosis, lymphoma, or pulmonary hypertension.'},
+    ],
+    pitfall:'Do not miss a tension pneumothorax. Look specifically for the sharp lung edge, tracheal deviation away from the affected side, and depression of the ipsilateral hemidiaphragm.'
+  },
+  {
+    key:'C', title:'Cardiac', color:'#d4a84b',
+    desc:'Assess heart size and contour. The cardiothoracic ratio on a PA film should be less than 0.5. Identify the SVC, aortic arch, right and left ventricular borders.',
+    checks:[
+      {label:'CT ratio', text:'Cardiac width divided by thoracic width at its widest. Greater than 0.5 on PA film suggests cardiomegaly. Not reliable on AP portable films.'},
+      {label:'Heart borders', text:'Right border: SVC and right atrium. Left border: aortic arch, pulmonary artery trunk, left atrial appendage, and left ventricle.'},
+      {label:'Aortic arch', text:'Visible as a bump on the left mediastinum. Unfolded or tortuous if prominent. Absent in coarctation of the aorta.'},
+      {label:'Pulmonary vasculature', text:'Upper lobe diversion, Kerley B lines, or perihilar bat-wing haze all suggest pulmonary oedema.'},
+    ],
+    pitfall:'AP portable films always magnify the cardiac silhouette. Never diagnose cardiomegaly on a portable AP film without clearly stating the limitation in your assessment.'
+  },
+  {
+    key:'D', title:'Diaphragm', color:'#9b7ec8',
+    desc:'The right hemidiaphragm is normally higher than the left by up to 2 cm due to the liver. Assess both costophrenic angles carefully and look for free subdiaphragmatic air.',
+    checks:[
+      {label:'Right hemidiaphragm', text:'Normally higher than the left. Elevation suggests hepatomegaly, right lower lobe collapse, subphrenic pathology, or phrenic nerve palsy.'},
+      {label:'Left hemidiaphragm', text:'Gastric bubble should be visible below it. If you cannot identify it, consider left lower lobe consolidation or a large pleural effusion.'},
+      {label:'Costophrenic angles', text:'Should be sharp and acute. Blunting requires approximately 200 to 300 mL of fluid. A blunt CP angle indicates pleural effusion.'},
+      {label:'Free air', text:'A crescent of air under the diaphragm on an erect film indicates pneumoperitoneum. Treat as a surgical emergency until proven otherwise.'},
+    ],
+    pitfall:'Do not mistake the gastric bubble or colonic flexure gas for free air. True pneumoperitoneum forms a continuous crescent, most often visible under the right hemidiaphragm.'
+  },
+  {
+    key:'E', title:'Everything Else', color:'#c45c5c',
+    desc:'Review bones, soft tissues, and anything outside the lung fields. This step prevents missing rib fractures, lytic lesions, subcutaneous emphysema, and extrathoracic findings.',
+    checks:[
+      {label:'Bones', text:'Ribs, clavicles, scapulae, humeri, and spine. Look for rib fractures especially posterior, lytic or sclerotic lesions, and vertebral collapse.'},
+      {label:'Soft tissues', text:'Subcutaneous emphysema, breast shadows, surgical clips, pacemaker leads, or mastectomy appearance. Check for neck masses.'},
+      {label:'Lines and tubes', text:'Account for all visible hardware: central lines, chest drains, pacing leads. Note tip position relative to known landmarks.'},
+      {label:'Below the diaphragm', text:'Hepatomegaly, splenomegaly, abnormal bowel gas, or renal calcification may be visible on a chest film.'},
+    ],
+    pitfall:'The bones are the most commonly skipped step. A rib fracture, sclerotic metastasis, or shoulder pathology can be the key finding and is easily missed if you stop after the lungs.'
+  }
+];
+
+var SUMMARY = [
+  {letter:'A', color:'#7ec8a0', title:'Airway',    items:'Trachea midline<br>Carina angle<br>Mainstem bronchi<br>Lines / tubes'},
+  {letter:'B', color:'#6ab0d4', title:'Breathing', items:'Lung zones<br>Lung markings<br>Fissures<br>Hila'},
+  {letter:'C', color:'#d4a84b', title:'Cardiac',   items:'CT ratio<br>Heart borders<br>Aortic arch<br>Pulm. vasculature'},
+  {letter:'D', color:'#9b7ec8', title:'Diaphragm', items:'R/L hemidiaphragm<br>CP angles<br>Free air<br>Gastric bubble'},
+  {letter:'E', color:'#c45c5c', title:'Everything', items:'Bones / ribs<br>Soft tissues<br>Spine<br>Below diaphragm'},
+];
+
+var current = 0;
+
+function renderStep(idx) {
+  current = idx;
+  var s = STEPS[idx];
+  var img = document.getElementById('xray-img');
+  img.classList.add('fade');
+  setTimeout(function() {
+    img.src = IMGS[s.key];
+    img.classList.remove('fade');
+  }, 180);
+  document.getElementById('xray-label').textContent = 'Step ' + s.key + ' — ' + s.title;
+  var checks = s.checks.map(function(c) {
+    return '<li><div class="dot" style="background:' + s.color + '"></div>'
+      + '<div><span class="label">' + c.label + '</span>'
+      + '<span class="note">' + c.text + '</span></div></li>';
+  }).join('');
+  document.getElementById('info-panel').innerHTML =
+    '<div><div class="step-header">'
+    + '<div class="step-letter-big" style="color:' + s.color + '">' + s.key + '</div>'
+    + '<div class="step-title">' + s.title + '</div></div>'
+    + '<p class="step-desc">' + s.desc + '</p></div>'
+    + '<ul class="checklist">' + checks + '</ul>'
+    + '<div class="pitfall-box"><div class="pitfall-title">Pitfall</div><p>' + s.pitfall + '</p></div>';
+  document.querySelectorAll('.step-btn').forEach(function(b, i) { b.classList.toggle('active', i === idx); });
+  document.querySelectorAll('.progress-dot').forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === STEPS.length - 1;
+  document.getElementById('step-counter').textContent = (idx + 1) + ' / ' + STEPS.length;
+}
+
+function navigate(dir) {
+  var n = current + dir;
+  if (n >= 0 && n < STEPS.length) renderStep(n);
+}
+
+var nav = document.getElementById('step-nav');
+STEPS.forEach(function(s, i) {
+  var b = document.createElement('button');
+  b.className = 'step-btn';
+  b.innerHTML = '<span class="letter">' + s.key + '</span>' + s.title;
+  b.onclick = function() { renderStep(i); };
+  nav.appendChild(b);
+});
+
+var dots = document.getElementById('progress-dots');
+STEPS.forEach(function(s, i) {
+  var d = document.createElement('div');
+  d.className = 'progress-dot';
+  d.onclick = function() { renderStep(i); };
+  dots.appendChild(d);
+});
+
+var grid = document.getElementById('abcde-grid');
+SUMMARY.forEach(function(s, i) {
+  var c = document.createElement('div');
+  c.className = 'abcde-card';
+  c.innerHTML = '<div class="big-letter" style="color:' + s.color + '">' + s.letter + '</div>'
+    + '<div class="card-title">' + s.title + '</div>'
+    + '<div class="card-items">' + s.items + '</div>';
+  c.onclick = function() { renderStep(i); };
+  grid.appendChild(c);
+});
+
+renderStep(0);
+</script>
+</body>
+</html>

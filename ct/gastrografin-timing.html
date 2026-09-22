@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastrografin Transit Timing - Reference</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #101116; font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 16px; }
+.page { background: #1a1b21; color: #e9e7e0; max-width: 760px; margin: 0 auto; padding: 28px 24px 48px; border-radius: 14px; border: 1px solid #2b2c34; }
+.top-bar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 12px; }
+.title-block .page-title { font-size: 22px; font-weight: 700; color: #e9e7e0; margin-bottom: 3px; line-height: 1.2; }
+.title-block .page-subtitle { font-size: 13px; color: #8c8b93; }
+.creator { text-align: right; flex-shrink: 0; }
+.creator-name { font-size: 12px; font-weight: 700; color: #e9e7e0; }
+.creator-sub { font-size: 10px; color: #8c8b93; line-height: 1.6; }
+.divider { border: none; border-top: 1px solid #2b2c34; margin: 14px 0 20px; }
+.intro { font-size: 13px; color: #b3b1ab; line-height: 1.7; margin-bottom: 20px; }
+.stage-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.nav-btn { padding: 8px 14px; border-radius: 20px; border: 1.5px solid #33343d; background: #24252c; color: #b3b1ab; cursor: pointer; font-size: 12px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; transition: all .15s; }
+.nav-btn.active { background: #e8a94a; color: #1a1408; border-color: #e8a94a; }
+.stage-title { font-size: 17px; font-weight: 700; color: #e9e7e0; margin-bottom: 3px; }
+.stage-mol { font-size: 11px; font-style: italic; color: #8c8b93; margin-bottom: 14px; }
+.tract-svg { width: 100%; height: auto; margin-bottom: 6px; }
+.tract-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.tip-box { border-radius: 8px; padding: 12px 14px; font-size: 12px; line-height: 1.7; color: #c9c7c1; margin-top: 12px; }
+.tip-box strong { color: #f2f0ea; }
+.section-divider { border: none; border-top: 1px solid #2b2c34; margin: 24px 0 18px; }
+.summary-title { font-size: 15px; font-weight: 700; color: #e9e7e0; margin-bottom: 10px; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.summary-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 500px; }
+.summary-table th { background: #0d0e11; color: #ffffff; padding: 8px 8px; text-align: center; font-weight: 500; }
+.summary-table td { padding: 7px 8px; text-align: center; border: 0.5px solid #2b2c34; color: #d8d6cf; }
+.summary-table tr:nth-child(odd) td { background: #1f2025; }
+.summary-table tr:nth-child(even) td { background: #1a1b21; }
+.summary-table td:first-child { text-align: left; font-weight: 500; }
+.summary-table td:last-child { text-align: left; }
+.memory { background: #2e2618; border: 1px solid #8a6a2a; border-radius: 8px; padding: 14px 16px; margin-top: 18px; }
+.memory-title { font-size: 13px; font-weight: 700; color: #e8c78a; margin-bottom: 8px; }
+.memory-row { font-size: 12px; color: #ecd7ac; margin-bottom: 6px; line-height: 1.5; }
+.memory-row strong { color: #e8c78a; display: block; }
+.refs-box { margin-top: 20px; padding-top: 14px; border-top: 0.5px solid #2b2c34; }
+.refs-title { font-size: 11px; font-weight: 700; color: #8c8b93; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.refs-list { list-style: none; padding: 0; }
+.refs-list li { font-size: 10px; color: #8c8b93; line-height: 1.7; padding-left: 14px; position: relative; margin-bottom: 3px; }
+.refs-list li::before { content: counter(ref-counter) "."; counter-increment: ref-counter; position: absolute; left: 0; font-weight: 600; }
+.refs-list { counter-reset: ref-counter; }
+.refs-list a { color: #e8c78a; text-decoration: none; }
+.footer-note { font-size: 10px; color: #8c8b93; font-style: italic; margin-top: 14px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="index.html" style="display:inline-block;font-family:-apple-system,sans-serif;font-size:11px;color:#8c8b93;text-decoration:none;margin-bottom:14px;">&larr; CT</a>
+  <div class="top-bar">
+    <div class="title-block">
+      <div class="page-title">Gastrografin Transit Timing</div>
+      <div class="page-subtitle">Where the Contrast Is, at Each Checkpoint</div>
+    </div>
+    <div class="creator">
+      <div class="creator-name">Kayra Cengiz</div>
+      <div class="creator-sub">B.Arch &nbsp;|&nbsp; MD Candidate<br>BU School of Medicine</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <p class="intro">Water-soluble oral contrast (gastrografin) has two separate jobs: opacifying bowel for a diagnostic CT, and acting as a therapeutic and prognostic test in adhesive small bowel obstruction. Both depend entirely on timing. Tap through the checkpoints below to see where the contrast has actually gotten to, and what that tells you at each stage.</p>
+
+  <div class="stage-nav" id="stage-nav"></div>
+  <div id="stage-display"></div>
+
+  <hr class="section-divider">
+  <div class="summary-title">Quick reference summary</div>
+  <div class="table-wrap">
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th style="text-align:left">Checkpoint</th>
+          <th style="text-align:left">Region Reached</th>
+          <th style="text-align:left">Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0 to 15 min</td><td>Esophagus, stomach</td><td>Esophageal leak / perforation, gastric outlet</td></tr>
+        <tr><td>45 to 60 min</td><td>Duodenum, proximal jejunum</td><td>Standard oral contrast window for routine abdominal / pelvic CT</td></tr>
+        <tr><td>90 min to 2h</td><td>Distal ileum, ileocecal valve</td><td>Distal small bowel or right colon pathology</td></tr>
+        <tr><td>~4h</td><td>Right / transverse colon</td><td>Earliest realistic colonic transit checkpoint</td></tr>
+        <tr><td>8h</td><td>Colon (if challenge succeeding)</td><td>First formal SBO challenge checkpoint</td></tr>
+        <tr><td>24h</td><td>Colon, or challenge failed</td><td>Decision point: conservative vs. surgical management</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="memory">
+    <div class="memory-title">Memory aid</div>
+    <div class="memory-row"><strong>45 to 60 min = drink it before your CT</strong>Standard timing so oral contrast has reached the proximal small bowel by the time of routine abdominal imaging</div>
+    <div class="memory-row"><strong>Water-soluble, not barium, near a suspected leak</strong>Free barium causes severe peritoneal or mediastinal inflammation; water-soluble contrast is safely resorbed</div>
+    <div class="memory-row"><strong>24h in the colon = call off surgery</strong>Contrast reaching the colon within 24 hours predicts non-operative resolution of adhesive SBO with about 96% sensitivity</div>
+    <div class="memory-row"><strong>Not in the colon by 24h = surgical evaluation</strong>Traditional cutoff for considering the gastrografin challenge failed, though some groups now allow longer</div>
+  </div>
+
+  <div class="refs-box">
+    <div class="refs-title">References</div>
+    <ol class="refs-list">
+      <li>Branco BC, et al. Systematic review and meta-analysis of the diagnostic and therapeutic role of water-soluble contrast agent in adhesive small bowel obstruction. <em>Br J Surg.</em> 2010.</li>
+      <li>ACR-SPR Practice Parameter for the Performance of a Contrast Small Bowel Examination, water-soluble contrast challenge section.</li>
+      <li>Lawrence EM, Pickhardt PJ. Water-Soluble Contrast Challenge for Suspected Small-Bowel Obstruction. <em>AJR.</em> 2021;217:1365-66.</li>
+      <li>Zielinski MD, et al. Multi-institutional, prospective, observational study on the gastrografin challenge protocol.</li>
+    </ol>
+  </div>
+
+  <div class="footer-note">Note: Exact transit timing varies with the underlying pathology and degree of obstruction, so these windows are typical ranges, not fixed rules. Always correlate with the clinical picture and institutional protocol.</div>
+</div>
+
+<script>
+var SEGMENTS = ['Esophagus','Stomach','Duodenum','Jejunum','Ileum','Colon'];
+
+var STAGES = [
+  {
+    title: '1. Immediate (0 to 15 min)',
+    mol: 'Reaches the esophagus and stomach',
+    reached: [true, true, false, false, false, false],
+    tip: '<strong>0 to 15 minutes:</strong> Water-soluble contrast opacifies the esophagus almost immediately and reaches the stomach within minutes. This window is used to evaluate for esophageal perforation or anastomotic leak, and for gastric outlet assessment. Water-soluble contrast, not barium, is preferred whenever a leak is suspected: free barium in the mediastinum or peritoneum causes a severe inflammatory reaction, while water-soluble agents are safely resorbed.'
+  },
+  {
+    title: '2. Early Small Bowel (45 to 60 min)',
+    mol: 'Reaches the duodenum and proximal jejunum',
+    reached: [true, true, true, true, false, false],
+    tip: '<strong>45 to 60 minutes:</strong> This is the classic timing for routine abdominal and pelvic CT. Patients are typically given oral contrast to drink over the 45 to 60 minutes before the scan, so it has time to opacify the proximal small bowel and distinguish bowel loops from adjacent structures or fluid collections.'
+  },
+  {
+    title: '3. Distal Small Bowel (90 min to 2h)',
+    mol: 'Reaches the distal ileum and ileocecal valve',
+    reached: [true, true, true, true, true, false],
+    tip: '<strong>90 minutes to 2 hours:</strong> Contrast typically reaches the terminal ileum and ileocecal valve by this point. This window matters when the region of clinical interest is the distal small bowel or right colon, such as suspected Crohn disease, terminal ileitis, or an atypical presentation of appendicitis.'
+  },
+  {
+    title: '4. Right Colon (about 4h)',
+    mol: 'Reaches the ascending and transverse colon',
+    reached: [true, true, true, true, true, true],
+    tip: '<strong>About 4 hours:</strong> Under normal transit, contrast reaches the right colon by around 4 hours. This is the earliest realistic checkpoint for colonic transit, though it is rarely used alone. Most gastrografin challenge protocols for suspected small bowel obstruction wait for a later, more decisive checkpoint before acting on the result.'
+  },
+  {
+    title: '5. Gastrografin Challenge (8h)',
+    mol: 'First formal checkpoint in adhesive small bowel obstruction',
+    reached: [true, true, true, true, true, true],
+    tip: '<strong>8 hours (SBO challenge):</strong> In suspected adhesive small bowel obstruction, a common protocol administers gastrografin via NG tube and obtains an abdominal radiograph at 8 hours. If contrast is already visible in the colon, conservative management typically continues and further films may not be needed. If not, the challenge continues toward the 24-hour checkpoint.'
+  },
+  {
+    title: '6. Gastrografin Challenge (24h, decision point)',
+    mol: 'Contrast in colon predicts non-operative resolution',
+    reached: [true, true, true, true, true, true],
+    tip: '<strong>24 hours (decision point):</strong> A meta-analysis of adhesive SBO cases found that contrast reaching the colon within 24 hours predicts successful non-operative resolution with about 96% sensitivity and 99% positive predictive value. If contrast still has not reached the colon by 24 hours, this is traditionally considered a failed challenge and surgical evaluation is typically pursued, though some groups now use longer cutoffs of 36 to 48 hours given variability seen in more recent series.'
+  }
+];
+
+var current = 0;
+
+function makeTractSVG(reached) {
+  var segW = 100, gap = 14, h = 46;
+  var totalW = SEGMENTS.length * segW + (SEGMENTS.length - 1) * gap;
+  var svg = '<svg class="tract-svg" viewBox="0 0 '+totalW+' '+(h+26)+'" xmlns="http://www.w3.org/2000/svg">';
+  for (var i = 0; i < SEGMENTS.length; i++) {
+    var x = i * (segW + gap);
+    var on = reached[i];
+    var fill = on ? '#e8a94a' : '#24252c';
+    var stroke = on ? '#c8922a' : '#33343d';
+    var textColor = on ? '#1a1408' : '#8c8b93';
+    if (i > 0) {
+      var prevX = (i - 1) * (segW + gap) + segW;
+      var lineColor = (reached[i-1] && on) ? '#c8922a' : '#33343d';
+      svg += '<line x1="'+prevX+'" y1="'+(h/2)+'" x2="'+x+'" y2="'+(h/2)+'" stroke="'+lineColor+'" stroke-width="3"/>';
+    }
+    svg += '<rect x="'+x+'" y="0" width="'+segW+'" height="'+h+'" rx="8" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.5"/>';
+    svg += '<text x="'+(x+segW/2)+'" y="'+(h/2+4)+'" text-anchor="middle" font-size="11" font-weight="700" fill="'+textColor+'">'+(on ? '&#10003;' : '')+'</text>';
+    svg += '<text x="'+(x+segW/2)+'" y="'+(h+16)+'" text-anchor="middle" font-size="10" font-weight="600" fill="'+(on ? '#e8c78a' : '#8c8b93')+'">'+SEGMENTS[i]+'</text>';
+  }
+  svg += '</svg>';
+  return svg;
+}
+
+function renderStage(idx) {
+  current = idx;
+  var s = STAGES[idx];
+  var html = '<div class="stage-title">'+s.title+'</div>'
+    + '<div class="stage-mol">'+s.mol+'</div>'
+    + '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">' + makeTractSVG(s.reached) + '</div>'
+    + '<div class="tip-box" style="background:#1f2025;border:1px solid #33343d">'+s.tip+'</div>';
+  document.getElementById('stage-display').innerHTML = html;
+  document.querySelectorAll('.nav-btn').forEach(function(b, i) {
+    b.classList.toggle('active', i === idx);
+  });
+}
+
+var nav = document.getElementById('stage-nav');
+STAGES.forEach(function(s, i) {
+  var btn = document.createElement('button');
+  btn.className = 'nav-btn' + (i === 0 ? ' active' : '');
+  btn.textContent = s.title.replace(/^[0-9]+\.\s+/, '').replace(/\s*\(.*\)$/, '');
+  btn.onclick = function() { renderStage(i); };
+  nav.appendChild(btn);
+});
+
+renderStage(0);
+</script>
+</body>
+</html>
