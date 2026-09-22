@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CT Contrast Phases</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0d0f0f;--surface:#141717;--surface2:#1c2020;--border:#2a2f2f;--text:#e8ebe8;--text-dim:#7a8a7a;--text-muted:#4a5a4a;--accent:#7ec8a0;--accent-dim:#3a6a50;--red:#c45c5c;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;}
+.header{padding:28px 24px 20px;max-width:900px;margin:0 auto;border-bottom:1px solid var(--border);}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:5px;}
+h1{font-size:24px;font-weight:700;letter-spacing:-.02em;}
+.header-sub{font-size:13px;color:var(--text-dim);margin-top:4px;}
+.creator{text-align:right;flex-shrink:0;}
+.creator .name{font-size:12px;font-weight:600;}
+.creator .creds{font-size:10px;color:var(--text-dim);line-height:1.6;}
+.main{max-width:900px;margin:0 auto;padding:0 24px 48px;}
+.phase-nav{display:flex;gap:6px;flex-wrap:wrap;padding:18px 0 14px;border-bottom:1px solid var(--border);margin-bottom:22px;}
+.phase-btn{padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.phase-btn .timing{font-size:10px;opacity:.6;margin-left:4px;}
+.phase-btn.active{background:var(--surface2);border-color:var(--accent);color:var(--text);}
+.phase-btn.active .letter{color:var(--accent);}
+.phase-btn:hover:not(.active){border-color:var(--accent-dim);color:var(--text);}
+.phase-title{font-size:18px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px;}
+.phase-desc{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:22px;}
+.circles-row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;margin-bottom:22px;}
+.organ-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+.organ-circle{border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .35s ease;position:relative;}
+.organ-circle .hu-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.75);font-weight:500;}
+.organ-label{font-size:10px;color:var(--text-dim);text-align:center;max-width:72px;line-height:1.3;transition:color .2s;}
+.organ-wrap.selected .organ-label{color:var(--text);}
+.organ-card{background:var(--surface);border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.6;min-height:80px;margin-bottom:20px;}
+.organ-card .oname{font-weight:600;color:var(--text);margin-bottom:3px;font-size:14px;}
+.organ-card .odetail{color:var(--text-dim);}
+.organ-card .otip{margin-top:8px;font-size:12px;color:var(--accent);border-top:0.5px solid var(--border);padding-top:8px;}
+.hu-section{margin-bottom:24px;}
+.hu-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;}
+.hu-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;}
+.hu-row .hu-label{width:130px;color:var(--text-dim);flex-shrink:0;}
+.hu-track{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+.hu-fill{height:100%;border-radius:3px;transition:width .4s ease,background .4s ease;}
+.hu-num{min-width:48px;text-align:right;color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+.timer-section{margin-bottom:24px;}
+.timer-track{height:3px;background:var(--surface2);border-radius:2px;overflow:hidden;margin-top:4px;}
+.timer-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .4s ease;}
+.timer-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-bottom:3px;}
+.summary-section{border-top:1px solid var(--border);padding-top:22px;margin-top:8px;}
+.summary-title{font-size:14px;font-weight:700;margin-bottom:12px;}
+.summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+@media(max-width:580px){.summary-grid{grid-template-columns:repeat(2,1fr);}}
+.summary-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color .15s;}
+.summary-card:hover{border-color:var(--accent);}
+.summary-card .sc-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:3px;}
+.summary-card .sc-title{font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.summary-card .sc-best{font-size:10px;color:var(--text-dim);line-height:1.5;}
+.refs-section{margin-top:24px;padding-top:16px;border-top:1px solid var(--border);}
+.refs-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:7px;}
+.refs-list{list-style:none;counter-reset:ref;}
+.refs-list li{counter-increment:ref;font-size:10px;color:var(--text-muted);line-height:1.7;padding-left:18px;position:relative;margin-bottom:2px;}
+.refs-list li::before{content:counter(ref)".";position:absolute;left:0;font-weight:600;color:var(--text-dim);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="eyebrow">Radiology Reference</div>
+      <h1>CT Contrast Phases</h1>
+      <div class="header-sub">Organ enhancement patterns across all phases. Click any organ to see clinical detail.</div>
+    </div>
+    <div class="creator">
+      <div class="name">Kayra Cengiz</div>
+      <div class="creds">B.Arch &nbsp;|&nbsp; MD Candidate<br>BU School of Medicine</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="phase-nav" id="phase-nav"></div>
+
+  <div class="phase-title" id="phase-title"></div>
+  <div class="phase-desc" id="phase-desc"></div>
+
+  <div class="circles-row" id="circles-row"></div>
+
+  <div class="organ-card" id="organ-card">
+    <div style="color:var(--text-muted);font-size:12px">Click any organ circle above to see its enhancement pattern and clinical tip.</div>
+  </div>
+
+  <div class="hu-section">
+    <div class="hu-title">HU enhancement by structure</div>
+    <div id="hu-bars"></div>
+  </div>
+
+  <div class="timer-section">
+    <div class="timer-labels">
+      <span>0s</span>
+      <span id="timer-label" style="color:var(--text-dim);font-weight:500"></span>
+      <span>10 min</span>
+    </div>
+    <div class="timer-track"><div class="timer-fill" id="timer-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="summary-section">
+    <div class="summary-title">Quick reference by phase</div>
+    <div class="summary-grid" id="summary-grid"></div>
+  </div>
+
+  <div class="refs-section">
+    <div class="refs-eyebrow">References</div>
+    <ol class="refs-list">
+      <li>Tublin ME, et al. CT Nephrographic and Excretory Phase Imaging. <em>AJR.</em> 2009;193(5):1228-1234.</li>
+      <li>Cohan RH, et al. Renal Masses: Assessment with Late-Phase CT. <em>Radiology.</em> 1995;196:445-451.</li>
+      <li>Foley WD. Special focus session: multidetector CT: abdominal visceral imaging. <em>Radiographics.</em> 2002;22:701-719.</li>
+      <li>Zeman RK, et al. Helical CT of the Liver. <em>AJR.</em> 1996;166:1300-1308.</li>
+      <li>Macari M, Babb JS, et al. CT Urography: Protocol Optimization. <em>Radiology.</em> 2006;238(1):160-168.</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+var ORGANS = [
+  {key:'aorta',    label:'Aorta'},
+  {key:'ivc',      label:'IVC'},
+  {key:'liver',    label:'Liver'},
+  {key:'spleen',   label:'Spleen'},
+  {key:'pancreas', label:'Pancreas'},
+  {key:'portal',   label:'Portal vein'},
+  {key:'cortex',   label:'Renal cortex'},
+  {key:'medulla',  label:'Renal medulla'},
+  {key:'pelvis',   label:'Renal pelvis'},
+  {key:'bowel',    label:'Bowel wall'},
+];
+
+var PHASES = [
+  {
+    key:'nc', label:'Non-contrast', timing:'0s', timerPct:0,
+    desc:'Baseline scan without iodinated contrast. Essential for identifying calcification, haemorrhage (hyperdense), fat (hypodense), and renal calculi. Any hyperdense structure seen only before contrast is endogenous.',
+    best:'Stones, haemorrhage, calcification, fat',
+    organs:{
+      aorta:   {hu:40,  color:'#606060', detail:'Blood at baseline. About 40 HU.',                                                     tip:'Aortic calcification, aneurysm size, and dissection flap most conspicuous before contrast.'},
+      ivc:     {hu:38,  color:'#585858', detail:'Similar density to arterial blood. About 38 HU.',                                    tip:'IVC thrombus is easiest to identify before contrast washes out the filling defect.'},
+      liver:   {hu:55,  color:'#5a4a3a', detail:'Normally slightly hyperdense to spleen. About 50 to 60 HU.',                        tip:'If spleen is denser than liver, suspect hepatic steatosis. Fat quantification performed here.'},
+      spleen:  {hu:45,  color:'#4a4060', detail:'Slightly hypodense to liver at baseline. About 45 HU.',                             tip:'Baseline density reference for identifying hypervascular splenic lesions on arterial phase.'},
+      pancreas:{hu:40,  color:'#504040', detail:'Similar to soft tissue. About 35 to 45 HU.',                                        tip:'Pancreatic calcification (chronic pancreatitis) and pancreatic duct stones best seen here.'},
+      portal:  {hu:35,  color:'#585858', detail:'Blood pool at baseline. About 35 HU.',                                              tip:'Portal vein thrombus visible as hypodense filling defect before contrast.'},
+      cortex:  {hu:30,  color:'#404858', detail:'Renal cortex at baseline. About 28 to 35 HU.',                                     tip:'Renal cortical calcifications and staghorn calculi best seen on non-contrast.'},
+      medulla: {hu:28,  color:'#383845', detail:'Similar to cortex before contrast. About 25 to 32 HU.',                            tip:'Medullary nephrocalcinosis best identified here.'},
+      pelvis:  {hu:10,  color:'#282838', detail:'Collecting system contains urine at near-water density. About 5 to 15 HU.',         tip:'Obstructing calculi in the renal pelvis most conspicuous before contrast.'},
+      bowel:   {hu:20,  color:'#3a3a3a', detail:'Variable depending on luminal content. About 20 HU.',                              tip:'Pneumatosis intestinalis, pneumoperitoneum, and wall thickening best assessed here.'},
+    }
+  },
+  {
+    key:'art', label:'Arterial', timing:'~25s', timerPct:14,
+    desc:'Peak arterial opacification at approximately 25 seconds. Aorta and arterial branches maximally enhanced. Best phase for hypervascular lesions and vascular pathology.',
+    best:'Hypervascular lesions (HCC, RCC, NET), vascular pathology, active haemorrhage',
+    organs:{
+      aorta:   {hu:380, color:'#f0e8c0', detail:'Maximally enhanced. 300 to 400 HU. Brightest structure on this phase.',              tip:'Best phase for aortic dissection, active arterial haemorrhage, pseudoaneurysm, and vascular anatomy.'},
+      ivc:     {hu:30,  color:'#585858', detail:'Not yet opacified. Still dark at approximately 30 HU.',                             tip:'Dark IVC with a bright aorta is the key finding confirming arterial phase timing.'},
+      liver:   {hu:75,  color:'#7a6a3a', detail:'Beginning to enhance via hepatic artery (25% of supply). About 65 to 85 HU.',       tip:'Hypervascular lesions (HCC, FNH, hepatic adenoma) enhance brightly here and may wash out on portal venous phase.'},
+      spleen:  {hu:80,  color:'#8a6a9a', detail:'Heterogeneous arciform (stripelike) enhancement. NORMAL finding on arterial phase.', tip:'Arciform splenic enhancement is a normal variant. Do not mistake it for laceration or infarct.'},
+      pancreas:{hu:150, color:'#c07840', detail:'Most enhanced parenchymal organ on arterial phase. Up to 150 HU.',                   tip:'Pancreatic NETs are hypervascular and bright here. Hypovascular adenocarcinoma appears as a dark lesion against the bright enhancing pancreas.'},
+      portal:  {hu:40,  color:'#585858', detail:'Minimal to no enhancement on arterial phase. About 35 to 45 HU.',                   tip:'If the portal vein appears enhanced on this phase, the scan was timed too late.'},
+      cortex:  {hu:220, color:'#d09858', detail:'Renal cortex enhances brightly. 180 to 250 HU. Medulla lags behind.',               tip:'Classic corticomedullary differentiation. Best phase for hypervascular RCC. Bright cortex vs dark medulla is the hallmark.'},
+      medulla: {hu:40,  color:'#484858', detail:'Renal medulla not yet enhanced. About 35 to 45 HU. Clearly distinct from cortex.',  tip:'Medullary nephrocalcinosis and papillary necrosis most conspicuous on this phase due to cortex-medulla contrast.'},
+      pelvis:  {hu:12,  color:'#282838', detail:'Collecting system not yet opacified. Urine near water density.',                    tip:'Not useful for urothelial assessment at this phase.'},
+      bowel:   {hu:65,  color:'#585048', detail:'Bowel wall beginning to enhance via mesenteric arteries. About 60 to 70 HU.',       tip:'Active arterial haemorrhage into the bowel lumen shows as a hyperdense blush on this phase.'},
+    }
+  },
+  {
+    key:'pv', label:'Portal venous', timing:'~70s', timerPct:39,
+    desc:'The workhorse phase at approximately 70 seconds. Liver maximally enhanced via portal vein (75% of hepatic blood supply). IVC fully opacified. Best phase for routine abdominal pathology.',
+    best:'Hypovascular liver metastases, solid organ injury, bowel pathology, routine abdomen',
+    organs:{
+      aorta:   {hu:180, color:'#c8c0a0', detail:'Still well enhanced but less than arterial. About 150 to 200 HU.',                  tip:'Aorta less bright than arterial phase. If similar intensity, consider delayed scan timing.'},
+      ivc:     {hu:160, color:'#c0b898', detail:'Now fully opacified. About 140 to 180 HU.',                                         tip:'IVC opacification is the key landmark confirming portal venous phase.'},
+      liver:   {hu:130, color:'#b09050', detail:'Maximally enhanced. About 120 to 140 HU. Brightest phase for hepatic parenchyma.',   tip:'Hypovascular metastases (colorectal, lung, breast) appear as dark hypoenhancing lesions against bright liver parenchyma.'},
+      spleen:  {hu:115, color:'#9080b0', detail:'Now homogeneously enhanced. About 100 to 125 HU. Arciform pattern resolved.',        tip:'Residual splenic heterogeneity on portal venous phase suggests infarct, laceration, or mass.'},
+      pancreas:{hu:100, color:'#906030', detail:'Well enhanced but less than arterial phase. About 85 to 110 HU.',                    tip:'Hypovascular pancreatic adenocarcinoma most conspicuous here as dark mass against enhancing pancreas.'},
+      portal:  {hu:185, color:'#d8d0a8', detail:'Maximally opacified. About 160 to 200 HU.',                                         tip:'Portal vein thrombus shows as a dark filling defect. Tumour thrombus (e.g. HCC) may itself enhance.'},
+      cortex:  {hu:155, color:'#c09048', detail:'Renal cortex and medulla now equilibrating (nephrographic phase). About 130 to 170 HU.', tip:'Best phase for detecting renal parenchymal lesions. Cortex and medulla reach similar density, improving lesion conspicuity.'},
+      medulla: {hu:145, color:'#b08840', detail:'Renal medulla now approaching cortex density. About 120 to 155 HU.',                tip:'Corticomedullary differentiation lost. Whole parenchyma homogeneously bright in the nephrographic phase.'},
+      pelvis:  {hu:45,  color:'#484858', detail:'Collecting system beginning to opacify with excreted contrast. About 40 to 60 HU.', tip:'Early excretion visible. True excretory phase requires 3 to 10 minutes for full opacification.'},
+      bowel:   {hu:80,  color:'#706050', detail:'Bowel wall well and homogeneously enhanced. About 70 to 90 HU.',                    tip:'Bowel wall thickening, stratification, or pericolonic fat stranding suggests inflammation or ischaemia.'},
+    }
+  },
+  {
+    key:'del', label:'Delayed', timing:'~180s', timerPct:55,
+    desc:'At approximately 3 minutes, contrast redistributes into the extracellular space. Useful for HCC washout appearance, progressive fill-in of cholangiocarcinoma, and characterising fibrotic lesions.',
+    best:'HCC washout, cholangiocarcinoma, fibrous lesions, endoleak post-EVAR',
+    organs:{
+      aorta:   {hu:90,  color:'#909080', detail:'Enhancement washing out. About 80 to 100 HU.',                                      tip:'Endoleak after EVAR is best seen on delayed phase as contrast accumulating within the aneurysm sac.'},
+      ivc:     {hu:80,  color:'#888878', detail:'Equilibrating with surrounding tissue. About 70 to 90 HU.',                         tip:'IVC and aorta approaching similar density as contrast equilibrates.'},
+      liver:   {hu:90,  color:'#907838', detail:'Parenchymal enhancement washing out. About 80 to 100 HU.',                          tip:'HCC washout appearance: bright on portal venous phase, dark on delayed phase with an enhancing capsule. Highly specific for HCC.'},
+      spleen:  {hu:85,  color:'#706888', detail:'Gradual washout. About 80 to 95 HU.',                                               tip:'Haemangiomas show progressive fill-in and may appear isodense or hyperdense to liver on delayed phase.'},
+      pancreas:{hu:72,  color:'#705028', detail:'Washing out. About 65 to 80 HU.',                                                   tip:'Cholangiocarcinoma and fibrotic lesions show progressive centripetal enhancement on delayed phase, unlike HCC.'},
+      portal:  {hu:75,  color:'#888878', detail:'Equilibrating with surrounding soft tissue.',                                       tip:'Useful for characterising extent of portal vein thrombus.'},
+      cortex:  {hu:90,  color:'#a09050', detail:'Renal cortical enhancement washing out. About 80 to 100 HU.',                      tip:'Renal parenchymal lesion washout characteristics best assessed comparing portal venous to delayed phase.'},
+      medulla: {hu:88,  color:'#989048', detail:'Medullary washout. About 80 to 95 HU.',                                            tip:'Medullary enhancement and washout patterns help characterise complex cystic renal lesions.'},
+      pelvis:  {hu:180, color:'#c8c060', detail:'Renal pelvis opacifying with excreted contrast. About 150 to 220 HU.',             tip:'Early excretory phase visible. True maximum opacification of the collecting system occurs at 3 to 10 minutes.'},
+      bowel:   {hu:58,  color:'#605848', detail:'Washing out. About 50 to 65 HU.',                                                  tip:'Portal venous phase is preferred for bowel pathology. Delayed phase rarely adds value for bowel.'},
+    }
+  },
+  {
+    key:'exc', label:'Excretory', timing:'3-10 min', timerPct:100,
+    desc:'Contrast excreted by the kidneys opacifies the entire urinary collecting system. This is the CT urogram phase. Essential for urothelial lesions throughout the renal pelvis, ureters, and bladder.',
+    best:'Urothelial TCC, CT urogram, renal calculi within collecting system, bladder lesions',
+    organs:{
+      aorta:   {hu:55,  color:'#686858', detail:'Largely washed out. Near soft tissue density. About 50 to 65 HU.',                  tip:'Aorta near soft tissue density at this late phase. Not useful for vascular assessment.'},
+      ivc:     {hu:50,  color:'#606050', detail:'Near soft tissue density. About 45 to 58 HU.',                                      tip:'No longer useful for vascular assessment.'},
+      liver:   {hu:65,  color:'#705830', detail:'Mostly washed out. About 60 to 72 HU.',                                             tip:'Late progressive enhancement (cholangiocarcinoma, biliary hamartomas) still detectable at this phase.'},
+      spleen:  {hu:60,  color:'#605870', detail:'Near soft tissue density. About 55 to 68 HU.',                                      tip:'Splenic haemangiomas may show complete fill-in at this phase, becoming isodense.'},
+      pancreas:{hu:52,  color:'#5a4820', detail:'Near soft tissue density. About 48 to 58 HU.',                                      tip:'Not a useful phase for pancreatic pathology.'},
+      portal:  {hu:55,  color:'#686858', detail:'Near soft tissue density.',                                                         tip:'Not useful for portal vein assessment at this phase.'},
+      cortex:  {hu:68,  color:'#807858', detail:'Renal cortical parenchyma washed out. About 60 to 75 HU.',                         tip:'Renal cortex near soft tissue density. Parenchymal assessment best on portal venous phase.'},
+      medulla: {hu:65,  color:'#787050', detail:'Near soft tissue density. About 58 to 72 HU.',                                     tip:'Medullary assessment not useful at this phase.'},
+      pelvis:  {hu:450, color:'#f0e840', detail:'Renal pelvis, calyces, and ureters maximally opacified with excreted iodinated contrast. 400 to 500+ HU.', tip:'Best phase for urothelial TCC (filling defect in bright collecting system), CT urogram protocol, and renal calculi within the opacified pelvis. Entire urothelium from renal pelvis to bladder assessed.'},
+      bowel:   {hu:42,  color:'#504838', detail:'Near soft tissue density.',                                                         tip:'Not useful for bowel assessment at this phase.'},
+    }
+  },
+];
+
+var SUMMARY_DATA = [
+  {phase:'nc',  label:'Non-contrast', timing:'0s',       best:'Stones, haem, fat, calcification'},
+  {phase:'art', label:'Arterial',     timing:'~25s',     best:'HCC, RCC, NET, vascular injury'},
+  {phase:'pv',  label:'Portal venous',timing:'~70s',     best:'Liver mets, solid organ, bowel'},
+  {phase:'del', label:'Delayed',      timing:'~180s',    best:'HCC washout, cholangiocarcinoma'},
+  {phase:'exc', label:'Excretory',    timing:'3-10 min', best:'TCC, CT urogram, urothelium'},
+];
+
+var current = 0, selected = null;
+
+function huToSize(hu){
+  return Math.max(44, Math.min(90, 44 + hu / 5.5));
+}
+
+function huColor(hu){
+  if(hu > 300) return '#e8c840';
+  if(hu > 150) return '#5a9ed4';
+  if(hu > 80)  return '#7ec8a0';
+  return '#4a5a4a';
+}
+
+function render(){
+  var phase = PHASES[current];
+  document.getElementById('phase-title').textContent = phase.label;
+  document.getElementById('phase-desc').textContent = phase.desc;
+  document.getElementById('timer-label').textContent = phase.timing;
+  document.getElementById('timer-fill').style.width = phase.timerPct + '%';
+
+  document.querySelectorAll('.phase-btn').forEach(function(b, i){ b.classList.toggle('active', i === current); });
+
+  var row = document.getElementById('circles-row');
+  row.innerHTML = '';
+  ORGANS.forEach(function(o){
+    var d = phase.organs[o.key];
+    var size = huToSize(d.hu);
+    var isSelected = selected === o.key;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'organ-wrap' + (isSelected ? ' selected' : '');
+    wrap.onclick = function(){ selected = o.key; render(); };
+
+    var circle = document.createElement('div');
+    circle.className = 'organ-circle';
+    circle.style.width = size + 'px';
+    circle.style.height = size + 'px';
+    circle.style.background = d.color;
+    circle.style.outline = isSelected ? '2.5px solid var(--text)' : '2px solid transparent';
+    circle.style.outlineOffset = '2px';
+
+    var huVal = document.createElement('div');
+    huVal.className = 'hu-val';
+    huVal.textContent = d.hu + ' HU';
+    circle.appendChild(huVal);
+
+    var nameLabel = document.createElement('div');
+    nameLabel.className = 'organ-label';
+    nameLabel.textContent = o.label;
+
+    wrap.appendChild(circle);
+    wrap.appendChild(nameLabel);
+    row.appendChild(wrap);
+
+    if(isSelected){
+      document.getElementById('organ-card').innerHTML =
+        '<div class="oname">' + o.label + ' &mdash; ' + phase.label + '</div>'
+        + '<div class="odetail">' + d.detail + '</div>'
+        + '<div class="otip"><strong>Clinical tip:</strong> ' + d.tip + '</div>';
+    }
+  });
+
+  var barsHtml = '';
+  ORGANS.forEach(function(o){
+    var d = phase.organs[o.key];
+    var pct = Math.min(100, Math.round(d.hu / 5));
+    barsHtml += '<div class="hu-row">'
+      + '<span class="hu-label">' + o.label + '</span>'
+      + '<div class="hu-track"><div class="hu-fill" style="width:' + pct + '%;background:' + huColor(d.hu) + '"></div></div>'
+      + '<span class="hu-num">' + d.hu + ' HU</span>'
+      + '</div>';
+  });
+  document.getElementById('hu-bars').innerHTML = barsHtml;
+}
+
+function setPhase(idx){ current = idx; render(); }
+
+var nav = document.getElementById('phase-nav');
+PHASES.forEach(function(p, i){
+  var b = document.createElement('button');
+  b.className = 'phase-btn';
+  b.innerHTML = p.label + '<span class="timing">' + p.timing + '</span>';
+  b.onclick = function(){ setPhase(i); };
+  nav.appendChild(b);
+});
+
+var sg = document.getElementById('summary-grid');
+SUMMARY_DATA.forEach(function(s, i){
+  var c = document.createElement('div');
+  c.className = 'summary-card';
+  c.innerHTML = '<div class="sc-label">' + s.timing + '</div>'
+    + '<div class="sc-title">' + s.label + '</div>'
+    + '<div class="sc-best">' + s.best + '</div>';
+  c.onclick = function(){ setPhase(i); };
+  sg.appendChild(c);
+});
+
+render();
+</script>
+</body>
+</html>
