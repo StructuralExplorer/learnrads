@@ -135,7 +135,7 @@ body { background: #101116; font-family: -apple-system, 'Helvetica Neue', Helvet
     <div class="memory-row"><strong>Normal = your comparison point</strong>Every later stage is judged against this baseline; always compare with the contralateral side</div>
     <div class="memory-row"><strong>Early = often looks normal</strong>Cytotoxic edema starts immediately but takes hours to become visible; subtle insular ribbon loss and lentiform nucleus blurring are the earliest clues, and CT here mainly rules out hemorrhage before thrombolysis</div>
     <div class="memory-row"><strong>Established = the early clues become definite</strong>The insular ribbon and lentiform nucleus, only subtly blurred earlier, are now clearly obscured; hypodensity is well defined and follows the vascular territory</div>
-    <div class="memory-row"><strong>Late = mass effect building toward its peak</strong>Sulcal effacement and ventricular compression increase as edema builds toward days 3 to 5; hemorrhagic transformation risk is also highest around day 4, especially after reperfusion</div>
+    <div class="memory-row"><strong>Late = mass effect building toward its peak</strong>Sulcal effacement and ventricular compression increase as edema builds toward days 3 to 5; hemorrhagic transformation remains an important complication, particularly after reperfusion</div>
     <div class="memory-row"><strong>Subacute = the fogging trap</strong>Around 2 to 3 weeks the infarct can transiently return to near-normal density as macrophages move in; do not let this reassure you. True encephalomalacia and ex-vacuo dilation are later, chronic findings, typically not seen until well beyond 3 weeks</div>
   </div>
 
@@ -204,11 +204,11 @@ var STAGES = [
     tip: '<strong>Edema keeps building.</strong> The hypodensity is now well established, and sulcal effacement with ventricular compression becomes more apparent as mass effect climbs toward its peak around days 3 to 5. This window also carries the highest risk of hemorrhagic transformation, peaking around day 4, especially after reperfusion therapy.',
     checks: [
       { label: 'Grey-white differentiation:', text: 'fully and clearly lost over the territory; this distinction is well established by this point.', dot: '#8c8b93' },
-      { label: 'Vessel sign:', text: 'typically resolved; the clot itself is no longer the dominant finding.', dot: '#8c8b93' },
+      { label: 'Vessel sign:', text: 'may no longer be conspicuous; evolving parenchymal change is usually the dominant finding.', dot: '#8c8b93' },
       { label: 'Mass effect:', text: 'increasing sulcal effacement and compression of the adjacent ventricle as edema builds toward its peak.', dot: '#e8a94a' },
       { label: 'Density:', text: 'well-defined hypodensity, increasingly conspicuous as swelling peaks.', dot: '#e8a94a' }
     ],
-    pitfall: 'Peak mass effect in this window is expected natural history, not necessarily a sign of a new or expanding process. But this is also the highest-risk window for hemorrhagic transformation, so a sudden clinical change here warrants a repeat scan.'
+    pitfall: 'Peak mass effect in this window is expected natural history, not necessarily a sign of a new or expanding process. Hemorrhagic transformation remains an important complication, so a sudden clinical change warrants a repeat scan.'
   },
   {
     title: '5. Subacute (3 days to 3wk)',
@@ -220,7 +220,7 @@ var STAGES = [
       { label: 'Grey-white differentiation:', text: 'well defined earlier in this window, though it becomes harder to appreciate once fogging sets in.', dot: '#8c8b93' },
       { label: 'Vessel sign:', text: 'long resolved by this stage.', dot: '#8c8b93' },
       { label: 'Mass effect:', text: 'peaks around days 3 to 5, then gradually declines for the remainder of this window.', dot: '#e8a94a' },
-      { label: 'Density:', text: 'around 2 to 3 weeks, roughly half of infarcts transiently approach isodensity, the classic fogging effect, which can lead to underestimating true infarct size.', dot: '#e8a94a' }
+      { label: 'Density:', text: 'around 2 to 3 weeks, an infarct can transiently approach isodensity, the classic fogging effect, which can lead to underestimating true infarct size.', dot: '#e8a94a' }
     ],
     pitfall: 'The fogging effect is the trap of this stage. A follow-up scan around 2 to 3 weeks can look reassuringly normal even though the infarct is still there. Encephalomalacia and ex-vacuo ventricular dilation are not expected yet in this window; those are later, chronic findings typically seen well beyond 3 weeks. Correlate with prior imaging or clinical history rather than trusting the scan in isolation.'
   }

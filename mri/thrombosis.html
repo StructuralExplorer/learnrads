@@ -74,7 +74,7 @@ body { background: #101116; font-family: -apple-system, 'Helvetica Neue', Helvet
   </div>
 
   <hr class="divider">
-  <p class="intro">Signal intensity on MRI changes predictably as haemoglobin undergoes oxidative breakdown after clot formation. Recognising these patterns is critical for identifying thrombosis, especially cerebral venous sinus thrombosis (CVST), on non-contrast MRI. MRI with MRV remains the gold standard for diagnosis.</p>
+  <p class="intro">Signal intensity on MRI evolves as haemoglobin breaks down after clot formation, but the appearance of venous thrombus can vary by thrombus age, sinus, flow, and recanalisation. These patterns can help identify cerebral venous sinus thrombosis (CVST) on non-contrast MRI. MRI with MRV is a recommended noninvasive study for confirmation; CTV is a reasonable alternative.</p>
 
   <div class="stage-nav" id="stage-nav"></div>
   <div class="hint">Tap a sequence circle to see detailed notes.</div>
@@ -121,8 +121,8 @@ body { background: #101116; font-family: -apple-system, 'Helvetica Neue', Helvet
           <td>Iso / mildly hyperintense</td>
           <td style="color:#e8a94a">Iso to hyperintense</td>
           <td>Iso / variable</td>
-          <td style="color:#ff6e57;font-weight:700">&#8593;&#8593; Marked Blooming</td>
-          <td style="text-align:left">Hemosiderin</td>
+          <td>Variable</td>
+          <td style="text-align:left">Organised thrombus / recanalisation</td>
         </tr>
       </tbody>
     </table>
@@ -130,9 +130,9 @@ body { background: #101116; font-family: -apple-system, 'Helvetica Neue', Helvet
 
   <div class="memory">
     <div class="memory-title">Memory aid</div>
-    <div class="memory-row"><strong>Acute = dark on T2</strong>Intracellular deoxyhemoglobin causes T2 dephasing; SWI most sensitive in this stage</div>
+    <div class="memory-row"><strong>Acute = often dark on T2</strong>Intracellular deoxyhemoglobin can cause T2 dephasing; SWI/GRE can be particularly helpful, especially for cortical-vein thrombus</div>
     <div class="memory-row"><strong>Subacute = bright on T1</strong>Methemoglobin shortens T1 relaxation; both T1 and T2 bright in late subacute</div>
-    <div class="memory-row"><strong>Chronic = variable signal, marked SWI blooming</strong>Hemosiderin causes persistent susceptibility artifact even when T1/T2 are equivocal</div>
+    <div class="memory-row"><strong>Chronic = variable signal</strong>Organisation and recanalisation make conventional and susceptibility-sequence appearances variable</div>
   </div>
 
   <div class="refs-box">
@@ -146,7 +146,7 @@ body { background: #101116; font-family: -apple-system, 'Helvetica Neue', Helvet
     </ol>
   </div>
 
-  <div class="footer-note">Note: MRV (MR Venography) shows a filling defect at all stages and is the key confirmatory sequence for CVST. DWI signal in venous thrombosis should always be interpreted alongside ADC, T2/FLAIR, and GRE/SWI given its variability. Always correlate with clinical history.</div>
+  <div class="footer-note">Note: MRV is a key confirmatory study for CVST; CTV is a reasonable alternative. DWI signal in venous thrombosis should always be interpreted alongside ADC, T2/FLAIR, GRE/SWI, and venographic imaging given its variability. Always correlate with clinical history.</div>
 </div>
 
 <script>
@@ -154,7 +154,7 @@ var STAGES = [
   {
     title: '1. Acute Thrombosis (0 to 3 days)',
     mol: 'Dominant molecule: intracellular deoxyhemoglobin',
-    tip: '<strong>Acute thrombus (0 to 3 days):</strong> Intracellular deoxyhemoglobin causes marked <strong>T2 hypointensity</strong>, which may mimic a normal venous flow void. T1 is isointense and mildly dark, easily missed. DWI signal is variable (high or mixed). SWI/GRE is the most sensitive sequence, detecting the clot as a hypointense area due to magnetic susceptibility of deoxyhemoglobin.',
+    tip: '<strong>Acute thrombus (0 to 3 days):</strong> Intracellular deoxyhemoglobin can cause <strong>T2 hypointensity</strong>, which may mimic a normal venous flow void. T1 is often isointense to mildly hypointense and may be subtle. DWI signal is variable. SWI/GRE can be particularly helpful because susceptibility from deoxyhemoglobin may make clot conspicuous, especially in cortical veins.',
     tipBg: '#2e1c1c', tipBorder: '#7a3a3a',
     seqs: [
       { label: 'Iso / mildly hypointense', lc: '#888780', fill: '#888780', stroke: '#666663', sw: 5, ring: true,
@@ -163,8 +163,8 @@ var STAGES = [
         detail: '<strong>T2:</strong> Markedly hypointense (dark). Hallmark of acute thrombus. Deoxyhemoglobin causes strong T2 dephasing. May mimic a normal venous flow void, making acute CVT easy to miss on T2 alone.' },
       { label: 'Variable / Hyperintense', lc: '#888780', fill: '#c0bca8', stroke: '#999880', sw: 1,
         detail: '<strong>DWI:</strong> Variable signal, tending hyperintense in the acute phase. Venous thrombi show high or mixed high and iso signal intensity on DWI. ADC correlates negatively with erythrocyte content. DWI signal should always be interpreted alongside ADC and GRE/SWI.' },
-      { label: '&#8593;&#8593; Marked Blooming', lc: '#ff6e57', fill: '#1e1e1c', stroke: '#444442', sw: 1,
-        detail: '<strong>SWI/GRE:</strong> Marked blooming artifact. The most sensitive sequence for acute CVT. The magnetic susceptibility of deoxyhemoglobin makes the dural sinus or cortical vein markedly hypointense. SWI identifies isolated cortical vein thrombosis in the first days when T1 and T2 are less sensitive.' }
+      { label: 'Susceptibility blooming', lc: '#ff6e57', fill: '#1e1e1c', stroke: '#444442', sw: 1,
+        detail: '<strong>SWI/GRE:</strong> Susceptibility blooming can be conspicuous in acute CVT. Deoxyhemoglobin may make a dural sinus or cortical vein hypointense. These sequences can be particularly useful for isolated cortical-vein thrombosis when conventional sequences are equivocal.' }
     ]
   },
   {
@@ -201,8 +201,8 @@ var STAGES = [
   },
   {
     title: '4. Chronic Thrombosis (over 2 weeks)',
-    mol: 'Dominant molecule: hemosiderin / ferritin',
-    tip: '<strong>Chronic thrombus (over 2 weeks):</strong> The thrombus exhibits a <strong>variable pattern of signal intensity</strong> and can be more difficult to identify on T1 and T2. SWI improves detection in the chronic stage as hemosiderin deposition causes persistent susceptibility artifact. A chronically thrombosed sinus may still show low signal on GRE/SWI.',
+    mol: 'Organising thrombus with variable breakdown products and recanalisation',
+    tip: '<strong>Chronic thrombus (over 2 weeks):</strong> Signal intensity is variable and may be difficult to interpret on any single conventional or susceptibility sequence. Organisation and recanalisation can produce heterogeneous appearances; confirm suspected chronic CVT with appropriate venographic imaging and comparison with prior studies when available.',
     tipBg: '#1f2025', tipBorder: '#44454e',
     seqs: [
       { label: 'Iso / mildly hyperintense', lc: '#888780', fill: '#a89f88', stroke: '#888065', sw: 1,
@@ -211,8 +211,8 @@ var STAGES = [
         detail: '<strong>T2:</strong> Iso to hyperintense but variable. Chronic CVT with incomplete recanalisation may present a diagnostic challenge on MRI. An irregular sinus appearance with multiple serpiginous intrathrombus flow voids may indicate incomplete recanalisation on MRV.' },
       { label: 'Iso / variable', lc: '#888780', fill: '#888780', stroke: '#666663', sw: 1,
         detail: '<strong>DWI:</strong> Iso, largely normalised. DWI signal correlates positively with smooth muscle cells, macrophages, hemosiderin and collagen content as the clot organises over weeks. DWI is less useful for diagnosis in the chronic stage.' },
-      { label: '&#8593;&#8593; Marked Blooming', lc: '#ff6e57', fill: '#141412', stroke: '#333330', sw: 1,
-        detail: '<strong>SWI/GRE:</strong> Marked blooming returns and persists. Hemosiderin and other blood breakdown products produce increased signal drop-out on GRE/SWI, detecting intravessel clots in stages where the thrombus may be unapparent on other sequences. A chronically thrombosed sinus may still have low signal on these sequences.' }
+      { label: 'Variable', lc: '#888780', fill: '#888780', stroke: '#666663', sw: 1,
+        detail: '<strong>SWI/GRE:</strong> Variable. Susceptibility signal in chronic thrombus is not a reliable stand-alone diagnostic hallmark. Interpret it with the conventional sequences, MRV or CTV, and prior imaging when available.' }
     ]
   }
 ];
